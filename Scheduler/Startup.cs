@@ -35,13 +35,13 @@ namespace Scheduler
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = "880205385519413";
-                facebookOptions.AppSecret = "30b4b05ab3a0f095ce51033b5a253cb7";
+                facebookOptions.AppId = Configuration.GetSection("Authentication")["FacebookId"];
+                facebookOptions.AppSecret = Configuration.GetSection("Authentication")["FacebookSecret"];
 
             }).AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = "805981791385-fqtlneea1p0rbdfsmualltb5kqrbeljl.apps.googleusercontent.com";
-                googleOptions.ClientSecret = "qiCbSenNdkIPIfOXstDyQ6_s";
+                googleOptions.ClientId = Configuration.GetSection("Authentication")["GoogleId"];
+                googleOptions.ClientSecret = Configuration.GetSection("Authentication")["GoogleSecret"];
             })
            .AddCookie();
 
