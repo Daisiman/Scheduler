@@ -33,6 +33,18 @@ namespace Scheduler
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "880205385519413";
+                facebookOptions.AppSecret = "30b4b05ab3a0f095ce51033b5a253cb7";
+
+            }).AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "805981791385-fqtlneea1p0rbdfsmualltb5kqrbeljl.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "qiCbSenNdkIPIfOXstDyQ6_s";
+            })
+           .AddCookie();
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
