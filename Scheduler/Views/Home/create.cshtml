@@ -1,0 +1,17 @@
+﻿@model Scheduler.Models.Doctor
+@{
+    ViewData["Title"] = "Create doctor";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>Create new doctor</h3>
+
+<form>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Surname)
+        @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+    </div>
+</form>

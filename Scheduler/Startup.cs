@@ -33,6 +33,8 @@ namespace Scheduler
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddSingleton<IDoctorList, FakeDoctorList>();
+
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration.GetSection("Authentication")["FacebookId"];
