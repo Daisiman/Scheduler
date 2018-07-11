@@ -64,6 +64,11 @@ namespace Scheduler.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    if (.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("About");
+                    }
+                    //CHECK IF ADMIN AND REDIRECT TO ADMIN PAGE
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
