@@ -1,18 +1,7 @@
-﻿@model Scheduler.ViewModels.DoctorsViewModel
-@{
+﻿@{
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
 <p>Use this area to provide additional information.</p>
-
-<table class="table table-bordered table-hover" >
-    @foreach (var doctor in Model.Doctors)
-    {
-        <tr>
-            <td>@doctor.Name @doctor.Surname</td>
-        </tr>
-    }
-
-</table>

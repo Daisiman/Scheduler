@@ -20,14 +20,8 @@ namespace Scheduler.Controllers
             _doctorList = doctorList;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        public async Task<IActionResult> About()
-        {
-            //ViewData["Message"] = "Your application description page.";
 
             var doctors = await _doctorList.GetAllDoctorsAsync();
 
@@ -37,6 +31,13 @@ namespace Scheduler.Controllers
             };
 
             return View(model);
+        }
+
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
         }
 
         public IActionResult Contact()
