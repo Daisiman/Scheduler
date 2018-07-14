@@ -12,6 +12,7 @@ namespace Scheduler.Data
     {
 
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<WorkHours> WorkHours { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

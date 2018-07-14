@@ -24,7 +24,21 @@ namespace Scheduler.Services
 
             };
 
-            return Task.FromResult(new[] { doctor1, doctor2 });
+            var doctor3 = new Doctor
+            {
+                Name = "Benas",
+                Surname = "Supis"
+
+            };
+
+            var doctor4 = new Doctor
+            {
+                Name = "Grajus",
+                Surname = "Kibinskis"
+
+            };
+
+            return Task.FromResult(new[] { doctor1, doctor2, doctor3, doctor4 });
         }
     }
 }
