@@ -10,7 +10,7 @@ using Scheduler.Data;
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180714225256_OverrideDoctorCreateTable")]
+    [Migration("20180716165144_OverrideDoctorCreateTable")]
     partial class OverrideDoctorCreateTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,43 +184,27 @@ namespace Scheduler.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(80);
 
-                    b.Property<string>("Scope");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80);
 
-                    b.Property<string>("Surname");
+                    b.Property<string>("Office");
 
-                    b.Property<int?>("WorkHoursId");
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasMaxLength(80);
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(80);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("WorkHoursId");
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("Scheduler.Models.WorkHours", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Friday");
-
-                    b.Property<DateTime>("Monday");
-
-                    b.Property<DateTime>("Saturday");
-
-                    b.Property<DateTime>("Sunday");
-
-                    b.Property<DateTime>("Thursday");
-
-                    b.Property<DateTime>("Tuesday");
-
-                    b.Property<DateTime>("Wednesday");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WorkHours");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -266,13 +250,6 @@ namespace Scheduler.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Scheduler.Models.Doctor", b =>
-                {
-                    b.HasOne("Scheduler.Models.WorkHours", "WorkHours")
-                        .WithMany()
-                        .HasForeignKey("WorkHoursId");
                 });
 #pragma warning restore 612, 618
         }

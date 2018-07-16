@@ -12,6 +12,12 @@
     <Compile Remove="Data\Migrations\20180714221943_CreateWorkHoursTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20180714222548_CreateWorkHoursTable.cs" />
     <Compile Remove="Data\Migrations\20180714222548_CreateWorkHoursTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180714225222_CreateWorkHoursTable.cs" />
+    <Compile Remove="Data\Migrations\20180714225222_CreateWorkHoursTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180714225256_OverrideDoctorCreateTable.cs" />
+    <Compile Remove="Data\Migrations\20180714225256_OverrideDoctorCreateTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180716160643_OverrideDoctorCreateTable.cs" />
+    <Compile Remove="Data\Migrations\20180716160643_OverrideDoctorCreateTable.Designer.cs" />
   </ItemGroup>
 
 
