@@ -13,28 +13,34 @@ namespace Scheduler.Services
             var doctor1 = new Doctor
             {
                 Name = "Vaidas",
-                Surname = "Vaidauskas"
+                Surname = "Vaidauskas",
+                Scope = "Dentist"
+                
 
             };
 
             var doctor2 = new Doctor
             {
                 Name = "Paulius",
-                Surname = "Paulauskis"
+                Surname = "Paulauskis",
+                Scope = "Family doctor"
 
             };
 
             var doctor3 = new Doctor
             {
                 Name = "Benas",
-                Surname = "Supis"
+                Surname = "Supis",
+                Scope = "Dentist"
+                
 
             };
 
             var doctor4 = new Doctor
             {
                 Name = "Grajus",
-                Surname = "Kibinskis"
+                Surname = "Kibinskis",
+                Scope = "..."
 
             };
 

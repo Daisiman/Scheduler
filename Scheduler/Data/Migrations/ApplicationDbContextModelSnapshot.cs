@@ -188,7 +188,11 @@ namespace Scheduler.Data.Migrations
 
                     b.Property<string>("Surname");
 
+                    b.Property<int?>("WorkHoursId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WorkHoursId");
 
                     b.ToTable("Doctors");
                 });
@@ -197,8 +201,6 @@ namespace Scheduler.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("DoctorId");
 
                     b.Property<DateTime>("Friday");
 
@@ -215,8 +217,6 @@ namespace Scheduler.Data.Migrations
                     b.Property<DateTime>("Wednesday");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
 
                     b.ToTable("WorkHours");
                 });
@@ -266,11 +266,11 @@ namespace Scheduler.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Scheduler.Models.WorkHours", b =>
+            modelBuilder.Entity("Scheduler.Models.Doctor", b =>
                 {
-                    b.HasOne("Scheduler.Models.Doctor", "Doctor")
+                    b.HasOne("Scheduler.Models.WorkHours", "WorkHours")
                         .WithMany()
-                        .HasForeignKey("DoctorId");
+                        .HasForeignKey("WorkHoursId");
                 });
 #pragma warning restore 612, 618
         }

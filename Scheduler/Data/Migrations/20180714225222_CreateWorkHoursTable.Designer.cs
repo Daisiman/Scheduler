@@ -10,8 +10,8 @@ using Scheduler.Data;
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180714223753_OverrideDoctorCreateTable")]
-    partial class OverrideDoctorCreateTable
+    [Migration("20180714225222_CreateWorkHoursTable")]
+    partial class CreateWorkHoursTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -200,8 +200,6 @@ namespace Scheduler.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("DoctorId");
-
                     b.Property<DateTime>("Friday");
 
                     b.Property<DateTime>("Monday");
@@ -217,8 +215,6 @@ namespace Scheduler.Data.Migrations
                     b.Property<DateTime>("Wednesday");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
 
                     b.ToTable("WorkHours");
                 });
@@ -266,13 +262,6 @@ namespace Scheduler.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Scheduler.Models.WorkHours", b =>
-                {
-                    b.HasOne("Scheduler.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,13 +8,17 @@ namespace Scheduler.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Scope",
+                table: "Doctors",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "WorkHours",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DoctorId = table.Column<int>(nullable: true),
                     Monday = table.Column<DateTime>(nullable: false),
                     Tuesday = table.Column<DateTime>(nullable: false),
                     Wednesday = table.Column<DateTime>(nullable: false),
@@ -26,24 +30,17 @@ namespace Scheduler.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkHours", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_WorkHours_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkHours_DoctorId",
-                table: "WorkHours",
-                column: "DoctorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "WorkHours");
+
+            migrationBuilder.DropColumn(
+                name: "Scope",
+                table: "Doctors");
         }
     }
 }

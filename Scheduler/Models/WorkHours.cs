@@ -8,7 +8,6 @@ namespace Scheduler.Models
     public class WorkHours
     {
         public int Id { get; set; }
-        public Doctor Doctor { get; set; }
         public DateTime Monday { get; set; }
         public DateTime Tuesday { get; set; }
         public DateTime Wednesday { get; set; }

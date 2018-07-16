@@ -10,8 +10,8 @@ using Scheduler.Data;
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180714222548_CreateWorkHoursTable")]
-    partial class CreateWorkHoursTable
+    [Migration("20180714225256_OverrideDoctorCreateTable")]
+    partial class OverrideDoctorCreateTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,9 +186,15 @@ namespace Scheduler.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Scope");
+
                     b.Property<string>("Surname");
 
+                    b.Property<int?>("WorkHoursId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WorkHoursId");
 
                     b.ToTable("Doctors");
                 });
@@ -197,8 +203,6 @@ namespace Scheduler.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("DoctorId");
 
                     b.Property<DateTime>("Friday");
 
@@ -215,8 +219,6 @@ namespace Scheduler.Data.Migrations
                     b.Property<DateTime>("Wednesday");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
 
                     b.ToTable("WorkHours");
                 });
@@ -266,11 +268,11 @@ namespace Scheduler.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Scheduler.Models.WorkHours", b =>
+            modelBuilder.Entity("Scheduler.Models.Doctor", b =>
                 {
-                    b.HasOne("Scheduler.Models.Doctor", "Doctor")
+                    b.HasOne("Scheduler.Models.WorkHours", "WorkHours")
                         .WithMany()
-                        .HasForeignKey("DoctorId");
+                        .HasForeignKey("WorkHoursId");
                 });
 #pragma warning restore 612, 618
         }

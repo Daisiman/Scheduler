@@ -12,5 +12,6 @@ namespace Scheduler.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Scope { get; set; }
+        public WorkHours WorkHours { get; set; }
     }
 }
