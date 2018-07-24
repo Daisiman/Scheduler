@@ -73,6 +73,8 @@ namespace Scheduler.Controllers
             _context.Doctors.Add(doctor);
             _context.SaveChanges();
 
+
+
             return RedirectToAction("Index", "Home");
         }
 

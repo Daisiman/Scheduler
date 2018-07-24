@@ -33,7 +33,7 @@ namespace Scheduler
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddSingleton<IDoctorList, FakeDoctorList>();
+            services.AddScoped<IDoctorList, DoctorList>();
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
