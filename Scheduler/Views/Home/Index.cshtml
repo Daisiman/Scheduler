@@ -67,14 +67,21 @@
     </a>
 </div>  -->
 
-<table class="table table-bordered table-hover">
+<ul class="doctors">
+
     @foreach (var doctor in Model.Doctors)
     {
-        <tr>
-            <td>@doctor.Name @doctor.Surname</td>
-            <td> @doctor.Scope</td>
-        </tr>
+        <li>
+            <div class="image">
+                <img src="~/images/blank.png" />
+            </div>
+
+            <div class="details">
+                <div class="Name">@doctor.Name @doctor.Surname</div>
+                <div class="Scope">@doctor.Scope</div>
+            </div>
+        </li>
     }
 
-</table>
+</ul>
 

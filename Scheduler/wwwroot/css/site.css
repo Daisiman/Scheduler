@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 80px;
     padding-bottom: 20px;
 }
 
@@ -32,4 +32,21 @@
     .carousel-caption {
         display: none;
     }
+}
+
+/*Page level styles*/
+
+.doctors {
+    list-style: none;
+}
+
+.doctors > li {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.doctors li .details {
+    position: absolute;
+    top: 0;
+    left: 80px;
 }
