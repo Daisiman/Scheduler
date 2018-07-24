@@ -2,17 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Scheduler.Data;
+using Scheduler.Models;
 
 namespace Scheduler.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
-        public ActionResult Index()
+        public ApplicationDbContext _context { get; private set; }
+
+        public AdminController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(Doctor model)
+        {
+            var doctor = new Doctor()
+            {
+                Name = model.Name,
+                Surname = model.Surname,
+                Scope = model.Scope,
+                Address = model.Address,
+                Office = model.Office
+            };
+
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Admin/Details/5
