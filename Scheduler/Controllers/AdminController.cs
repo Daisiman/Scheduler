@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
 using Scheduler.Models;
+using Scheduler.ViewModels;
 
 namespace Scheduler.Controllers
 {
+
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         public ApplicationDbContext _context { get; private set; }
@@ -21,14 +24,12 @@ namespace Scheduler.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Index(Doctor model)
         {
@@ -47,12 +48,6 @@ namespace Scheduler.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: Admin/Create
         public ActionResult Create()
         {
@@ -62,18 +57,34 @@ namespace Scheduler.Controllers
         // POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(DoctorAndWorkHours model)
         {
-            try
+            var doctor = new Doctor()
             {
-                // TODO: Add insert logic here
+                Name = model.Name,
+                Surname = model.Surname,
+                Scope = model.Scope,
+                Address = model.Address,
+                Office = model.Office,
+                PhoneNumber = model.PhoneNumber
+            };
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
+
+            var lastDoctorId = doctor.Id;
+
+            var workHours = new DoctorWorkHours()
             {
-                return View();
-            }
+                Id = lastDoctorId,
+                MondayFrom = model.MondayFrom,
+                MondayTo = model.MondayTo
+            };
+
+            _context.DoctorWorkHours.Add(workHours);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Admin/Edit/5

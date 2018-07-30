@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Scheduler.Data;
 
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180730105025_AddPhoneToDoctorTable")]
+    partial class AddPhoneToDoctorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,43 +210,6 @@ namespace Scheduler.Data.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("Scheduler.Models.DoctorWorkHours", b =>
-                {
-                    b.Property<int>("Id");
-
-                    b.Property<DateTime?>("FridayFrom");
-
-                    b.Property<DateTime?>("FridayTo");
-
-                    b.Property<DateTime?>("MondayFrom");
-
-                    b.Property<DateTime?>("MondayTo");
-
-                    b.Property<DateTime?>("SaturdayFrom");
-
-                    b.Property<DateTime?>("SaturdayTo");
-
-                    b.Property<DateTime?>("SundayFrom");
-
-                    b.Property<DateTime?>("SundayTo");
-
-                    b.Property<DateTime?>("ThursdayFrom");
-
-                    b.Property<DateTime?>("ThursdayTo");
-
-                    b.Property<DateTime?>("TuesdayFrom");
-
-                    b.Property<DateTime?>("TuesdayTo");
-
-                    b.Property<DateTime?>("WednesdayFrom");
-
-                    b.Property<DateTime?>("WednesdayTo");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DoctorWorkHours");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -287,14 +252,6 @@ namespace Scheduler.Data.Migrations
                     b.HasOne("Scheduler.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Scheduler.Models.DoctorWorkHours", b =>
-                {
-                    b.HasOne("Scheduler.Models.Doctor", "Doctor")
-                        .WithOne("DoctorWorkHours")
-                        .HasForeignKey("Scheduler.Models.DoctorWorkHours", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -71,16 +71,31 @@
 
     @foreach (var doctor in Model.Doctors)
     {
-        <li>
-            <div class="image">
-                <img src="~/images/blank.png" />
+    <li>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#@doctor.Id">
+                            <div class="image">
+                                <img src="~/images/blank.png" />
+                            </div>
+                            <div class="details">
+                                <div class="Name">@doctor.Name @doctor.Surname</div>
+                                <div class="Scope">@doctor.Scope</div>                       
+                            </div>
+                        </a>
+                    </h4>
+                </div>
+                <div id="@doctor.Id" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div>Adresas: @doctor.Address - @doctor.Office</div>
+                        <div>Telefono numeris: @doctor.PhoneNumber</div>
+                        <button class="btn btn-default">Register</button>
+                    </div>
+                </div>
             </div>
-
-            <div class="details">
-                <div class="Name">@doctor.Name @doctor.Surname</div>
-                <div class="Scope">@doctor.Scope</div>
-            </div>
-        </li>
+    </li>
     }
 
 </ul>

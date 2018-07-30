@@ -47,6 +47,7 @@
 
 .doctors li .details {
     position: absolute;
-    top: 0;
-    left: 80px;
+    top: 15px;
+    left: 90px;
 }
+

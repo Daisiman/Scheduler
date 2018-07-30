@@ -29,7 +29,10 @@ namespace Scheduler.Models
         [StringLength(80)]
         public string Scope { get; set; }
 
-        //public WorkHours WorkHours { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        public virtual DoctorWorkHours DoctorWorkHours { get; set; }
 
     }
 }

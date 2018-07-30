@@ -18,6 +18,8 @@
     <Compile Remove="Data\Migrations\20180714225256_OverrideDoctorCreateTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20180716160643_OverrideDoctorCreateTable.cs" />
     <Compile Remove="Data\Migrations\20180716160643_OverrideDoctorCreateTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180730102617_AddPhoneNumberToDoctors.cs" />
+    <Compile Remove="Data\Migrations\20180730102617_AddPhoneNumberToDoctors.Designer.cs" />
   </ItemGroup>
 
 
