@@ -34,6 +34,7 @@ namespace Scheduler
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IDoctorList, DoctorList>();
+            services.AddScoped<IDoctorWorkHoursList, DoctorWorkHourList>();
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {

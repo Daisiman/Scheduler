@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scheduler.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace Scheduler.ViewModels
 {
     public class DoctorAndWorkHours
     {
+        //public Doctor Doctor { get; set; }
+        //public DoctorWorkHours DoctorWorkHours { get; set; }
         [Required]
         [StringLength(80)]
         public string Name { get; set; }
@@ -34,13 +37,24 @@ namespace Scheduler.ViewModels
         public DateTime MondayFrom { get; set; }
 
         [DataType(DataType.Time)]
-        [DisplayFormat(ApplyFormatInEditMode = true,  DataFormatString ="{0:HH:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         public DateTime MondayTo { get; set; }
 
-        //public DateTime TuesdayFrom { get; set; }
-        //public DateTime TuesdayTo { get; set; }
-        //public DateTime WednesdayFrom { get; set; }
-        //public DateTime WednesdayTo { get; set; }
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        public DateTime TuesdayFrom { get; set; }
+
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        public DateTime TuesdayTo { get; set; }
+
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        public DateTime WednesdayFrom { get; set; }
+
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        public DateTime WednesdayTo { get; set; }
         //public DateTime ThursdayFrom { get; set; }
         //public DateTime ThursdayTo { get; set; }
         //public DateTime FridayFrom { get; set; }

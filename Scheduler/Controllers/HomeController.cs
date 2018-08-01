@@ -15,10 +15,12 @@ namespace Scheduler.Controllers
     public class HomeController : Controller
     {
         private IDoctorList _doctorList;
+        private IDoctorWorkHoursList _doctorWorkHoursList;
         private ApplicationDbContext _context;
 
-        public HomeController(IDoctorList doctorList, ApplicationDbContext context)
+        public HomeController(IDoctorList doctorList, IDoctorWorkHoursList doctorWorkHoursList, ApplicationDbContext context)
         {
+            _doctorWorkHoursList = doctorWorkHoursList;
             _doctorList = doctorList;
             _context = context;
         }
@@ -26,11 +28,21 @@ namespace Scheduler.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var doctors = await _doctorList.GetAllDoctorsAsync();
+            //var viewModel = from item in _context.Doctors
+            //                join item2 in _context.DoctorWorkHours
+            //                on item.Id equals item2.Id
+            //                where item.Id.Equals(item2.Id)
+            //                select new DoctorsAndWorkHours { new DoctorsViewModel { Doctors = item }, DoctorWorkHours = item2 };
 
-            var model = new DoctorsViewModel()
+            //return View(viewModel);
+
+            var doctors = await _doctorList.GetAllDoctorsAsync();
+            var doctorsWorkHours = await _doctorWorkHoursList.GetAllDoctorsWorkHoursAsync();
+
+            var model = new DoctorsAndWorkHours()
             {
-                Doctors = doctors
+                DoctorsViewModel = new DoctorsViewModel { Doctors = doctors },
+                DoctorsWorkHoursViewModel = new DoctorsWorkHoursViewModel { DoctorWorkHours = doctorsWorkHours }
             };
 
             return View(model);

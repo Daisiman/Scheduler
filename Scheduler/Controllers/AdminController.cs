@@ -78,7 +78,11 @@ namespace Scheduler.Controllers
             {
                 Id = lastDoctorId,
                 MondayFrom = model.MondayFrom,
-                MondayTo = model.MondayTo
+                MondayTo = model.MondayTo,
+                TuesdayFrom = model.TuesdayFrom,
+                TuesdayTo = model.TuesdayTo,
+                WednesdayFrom = model.WednesdayFrom,
+                WednesdayTo = model.WednesdayTo              
             };
 
             _context.DoctorWorkHours.Add(workHours);
