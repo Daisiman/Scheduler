@@ -25,15 +25,63 @@ namespace Scheduler.Controllers
             _context = context;
         }
 
-        public JsonResult GetJson()
+        public JsonResult GetJson(int doctorId, int dayId)
         {
-            var list = new List<SelectOption>
-                   {
-                       new SelectOption { Value = "1", Text = "10" },
-                       new SelectOption { Value = "2", Text = "11" },
-                       new SelectOption { Value = "3", Text = "12" },
-                       new SelectOption { Value = "4", Text = "13" }
-                   };
+            var list = new List<SelectOption>();
+            var workHours = _context.DoctorWorkHours.FirstOrDefault(x => x.Id == doctorId);
+
+            switch (dayId)
+            {
+                case 0:
+                    for (int i = 0; i <= workHours.SundayTo.Value.Hour - workHours.SundayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.SundayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                case 1:
+                    for (int i = 0; i <= workHours.MondayTo.Value.Hour - workHours.MondayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.MondayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i <= workHours.TuesdayTo.Value.Hour - workHours.TuesdayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.TuesdayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i <= workHours.WednesdayTo.Value.Hour - workHours.WednesdayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.WednesdayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                case 4:
+                    for (int i = 0; i <= workHours.ThursdayTo.Value.Hour - workHours.ThursdayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.ThursdayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                case 5:
+                    for (int i = 0; i <= workHours.FridayTo.Value.Hour - workHours.FridayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.FridayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                case 6:
+                    for (int i = 0; i <= workHours.SaturdayTo.Value.Hour - workHours.SaturdayFrom.Value.Hour; i++)
+                    {
+                        list.Add(new SelectOption { Value = "i", Text = workHours.SaturdayFrom.Value.AddHours(i).ToString("t") });
+                    }
+                    break;
+                default:
+                    list = new List<SelectOption>
+                    {
+                       new SelectOption { Value = "", Text = "--select day--" }
+                    };
+                    break;
+
+            }
             return Json(list);
         }
 

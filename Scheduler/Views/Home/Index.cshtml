@@ -38,7 +38,7 @@
                                     <option value="">-- select day --</option>
 
                                     @for (int j = 0; j < DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - DateTime.Now.Day; j++)
-                                    {
+                                    {                                       
                                         <option value="@DateTime.Now.AddDays(j).DayOfWeek.ToString("d")">
                                             @DateTime.Now.AddDays(j).DayOfWeek ( @DateTime.Now.AddDays(j).ToString("MM/dd") )
                                         </option>
@@ -69,14 +69,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    function myFunction(id) {
-        $.getJSON("/Home/GetJson", null, function (data) {
+    function myFunction(doctorId) {
+
+        $("#selectTime-" + doctorId).html("");
+
+        $.getJSON("/Home/GetJson/", { DayId: $("#selectDay-" + doctorId).val(), doctorId: doctorId }, function (data) {
 
             console.log(data);
 
             for (var obj in data) {
                 console.log(data[obj].text);
-                $("#selectTime-" + id).append("<option value='2'>"+data[obj].text+"</option>");
+                $("#selectTime-" + doctorId).append("<option value='2'>"+data[obj].text+"</option>");
             }
         });
     }
