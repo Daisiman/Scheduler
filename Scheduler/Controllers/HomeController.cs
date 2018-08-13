@@ -25,17 +25,20 @@ namespace Scheduler.Controllers
             _context = context;
         }
 
+        public JsonResult GetJson()
+        {
+            var list = new List<SelectOption>
+                   {
+                       new SelectOption { Value = "1", Text = "10" },
+                       new SelectOption { Value = "2", Text = "11" },
+                       new SelectOption { Value = "3", Text = "12" },
+                       new SelectOption { Value = "4", Text = "13" }
+                   };
+            return Json(list);
+        }
+
         public async Task<IActionResult> Index()
         {
-
-            //var viewModel = from item in _context.Doctors
-            //                join item2 in _context.DoctorWorkHours
-            //                on item.Id equals item2.Id
-            //                where item.Id.Equals(item2.Id)
-            //                select new DoctorsAndWorkHours { new DoctorsViewModel { Doctors = item }, DoctorWorkHours = item2 };
-
-            //return View(viewModel);
-
             var doctors = await _doctorList.GetAllDoctorsAsync();
             var doctorsWorkHours = await _doctorWorkHoursList.GetAllDoctorsWorkHoursAsync();
 
@@ -95,4 +98,10 @@ namespace Scheduler.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+}
+
+public class SelectOption
+{
+    public String Value { get; set; }
+    public String Text { get; set; }
 }

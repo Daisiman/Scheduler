@@ -29,23 +29,9 @@ namespace Scheduler.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index(Doctor model)
+        public ActionResult DoctorList()
         {
-            var doctor = new Doctor()
-            {
-                Name = model.Name,
-                Surname = model.Surname,
-                Scope = model.Scope,
-                Address = model.Address,
-                Office = model.Office
-            };
-
-            _context.Doctors.Add(doctor);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
+            return View(_context.Doctors.ToList());
         }
 
         // GET: Admin/Create
@@ -94,19 +80,29 @@ namespace Scheduler.Controllers
         // GET: Admin/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var doctor = _context.Doctors.FirstOrDefault(x => x.Id == id);
+            return View(doctor);
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, IFormCollection collection, Doctor model)
         {
+            var doctor = _context.Doctors.FirstOrDefault(x => x.Id == id);
+
             try
             {
-                // TODO: Add update logic here
+                doctor.Name = model.Name;
+                doctor.Surname = model.Surname;
+                doctor.Address = model.Address;
+                doctor.Office = model.Office;
+                doctor.Scope = model.Scope;
+                doctor.PhoneNumber = model.PhoneNumber;
 
-                return RedirectToAction(nameof(Index));
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -117,24 +113,31 @@ namespace Scheduler.Controllers
         // GET: Admin/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var doctor = _context.Doctors.FirstOrDefault(x => x.Id == id);
+            return View(doctor);
         }
 
         // POST: Admin/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Doctor doctor)
         {
             try
             {
-                // TODO: Add delete logic here
+                _context.Remove(doctor);
+                _context.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
-                return View();
+                return RedirectToAction("About", "Home");
             }
+        }
+
+        public ActionResult BlackList()
+        {
+            return View(_context.Users.ToList());
         }
     }
 }

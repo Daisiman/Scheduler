@@ -1,31 +1,11 @@
 ﻿@model Scheduler.Models.Doctor
 @{
-    ViewData["Title"] = "Create doctor";
+    ViewData["Title"] = "Admin page";
 }
-<h2>@ViewData["Title"]</h2>
+<h2 style="text-align:center">@ViewData["Title"]</h2>
 
-@using (Html.BeginForm("create", "Home"))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Surname)
-        @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Scope)
-        @Html.TextBoxFor(m => m.Scope, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Address)
-        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Office)
-        @Html.TextBoxFor(m => m.Office, new { @class = "form-control" })
-    </div>
-
-    <button type="submit" class="btn btn-primary">Create</button>
-}
+<ul style="position:relative; text-align:center; padding:0; list-style:none;">
+    <li><a href="Admin/Create" class="btn btn-link btn-lg" role="button">Create doctor</a></li>
+    <li><a href="Admin/DoctorList" class="btn btn-link btn-lg" role="button">Edit/Delete doctor</a></li>
+    <li><a href="Admin/BlackList" class="btn btn-link btn-lg" role="button">Black list</a></li>
+</ul>

@@ -1,0 +1,27 @@
+﻿@model Scheduler.Models.Doctor
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Delete doctor</h1>
+
+<div class="text-info" style="font-size:larger">Name: @Model.Name</div>
+<div class="text-info" style="font-size:larger">Surname: @Model.Surname</div>
+<div class="text-info" style="font-size:larger">Scope: @Model.Scope</div>
+<div class="text-info" style="font-size:larger">Phone: @Model.PhoneNumber</div>
+<div class="text-info" style="font-size:larger">Address: @Model.Address</div>
+
+<br />
+
+<div>Are you really want to delete this doctor from database ?</div>
+
+<br />
+
+@using (Html.BeginForm())
+{
+
+    <input type="submit" value="Delete" class="btn btn-danger" />
+}
+
+<a class="btn btn-default" href="../DoctorList">Back</a>
