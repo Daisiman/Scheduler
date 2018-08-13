@@ -8,7 +8,6 @@ namespace Scheduler.Models
 {
     public class Doctor
     {
-        // img
         public int Id { get; set; }
 
         [Required]
@@ -33,6 +32,8 @@ namespace Scheduler.Models
         public string PhoneNumber { get; set; }
 
         public virtual DoctorWorkHours DoctorWorkHours { get; set; }
+
+        public virtual DoctorImage DoctorImage { get; set; }
 
     }
 }

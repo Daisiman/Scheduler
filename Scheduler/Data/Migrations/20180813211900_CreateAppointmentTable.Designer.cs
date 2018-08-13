@@ -11,9 +11,10 @@ using System;
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180813211900_CreateAppointmentTable")]
+    partial class CreateAppointmentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,17 +232,6 @@ namespace Scheduler.Data.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("Scheduler.Models.DoctorImage", b =>
-                {
-                    b.Property<int>("Id");
-
-                    b.Property<byte[]>("Image");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DoctorImage");
-                });
-
             modelBuilder.Entity("Scheduler.Models.DoctorWorkHours", b =>
                 {
                     b.Property<int>("Id");
@@ -333,14 +323,6 @@ namespace Scheduler.Data.Migrations
                     b.HasOne("Scheduler.Models.ApplicationUser", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId");
-                });
-
-            modelBuilder.Entity("Scheduler.Models.DoctorImage", b =>
-                {
-                    b.HasOne("Scheduler.Models.Doctor", "Doctor")
-                        .WithOne("DoctorImage")
-                        .HasForeignKey("Scheduler.Models.DoctorImage", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Scheduler.Models.DoctorWorkHours", b =>

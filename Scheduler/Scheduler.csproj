@@ -20,12 +20,16 @@
     <Compile Remove="Data\Migrations\20180716160643_OverrideDoctorCreateTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20180730102617_AddPhoneNumberToDoctors.cs" />
     <Compile Remove="Data\Migrations\20180730102617_AddPhoneNumberToDoctors.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180813210358_CreateAppointmentTable.cs" />
+    <Compile Remove="Data\Migrations\20180813210358_CreateAppointmentTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180813215005_CreateDoctorImageTable.cs" />
+    <Compile Remove="Data\Migrations\20180813215005_CreateDoctorImageTable.Designer.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
   </ItemGroup>
 

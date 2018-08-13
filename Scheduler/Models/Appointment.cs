@@ -10,8 +10,7 @@ namespace Scheduler.Models
     public class Appointment
     {
         public Doctor Doctor { get; set; }
-        public ApplicationUser User { get; set; }
-        public DateTime AppointmentDate { get; set; }
+        public ApplicationUser Patient { get; set; }
 
         [Key]
         [Column(Order = 1)]
@@ -19,6 +18,8 @@ namespace Scheduler.Models
 
         [Key]
         [Column(Order = 2)]
-        public string UserId { get; set; }
+        public DateTime AppointmentDate { get; set; }
+
+
     }
 }

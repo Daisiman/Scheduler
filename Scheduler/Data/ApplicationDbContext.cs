@@ -22,7 +22,14 @@ namespace Scheduler.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Appointment>().HasRequired();
+            //builder.Entity<Appointment>()
+            //    .HasOne(a => a.Doctor)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Appointment>()
+                .HasKey(c => new { c.DocotorId, c.AppointmentDate });
+
             base.OnModelCreating(builder);
         }
     }
