@@ -35,24 +35,33 @@
                                 <label>Select day:</label>
                                 <select name="selectDay" id="selectDay-@doctor.Id" class="form-control" onchange="myFunction(@doctor.Id)">
 
-                                    <option value="">-- select day --</option>
+                                    <option disabled selected value="">-- select day --</option>
 
                                     @for (int j = 0; j < DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - DateTime.Now.Day; j++)
-                                    {                                       
-                                        <option value="@DateTime.Now.AddDays(j).DayOfWeek.ToString("d")">
-                                            @DateTime.Now.AddDays(j).DayOfWeek ( @DateTime.Now.AddDays(j).ToString("MM/dd") )
-                                        </option>
+                                    {
+                                        @if ((DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Mon" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).MondayFrom != null) ||
+                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Tue" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).TuesdayFrom != null) ||
+                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Wed" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).WednesdayFrom != null) ||
+                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Thu" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).ThursdayFrom != null) ||
+                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Fri" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).FridayFrom != null) ||
+                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Sat" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).SaturdayFrom != null) ||
+                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Sun" && Model.DoctorsWorkHoursViewModel.DoctorWorkHours.FirstOrDefault(x => x.Id == doctor.Id).SundayFrom != null))                                            
+                                        {
+                                            <option value="@DateTime.Now.AddDays(j).DayOfWeek.ToString("d")">
+                                                @DateTime.Now.AddDays(j).DayOfWeek ( @DateTime.Now.AddDays(j).ToString("MM/dd") )
+                                            </option>
+                                        }
+
                                     }
                                 </select>
                             </div>
 
-                            <div id="Monday-@doctor.Id" class="form-group">
+                            <div class="form-group">
                                 <label>Select time:</label>
                                 <select id="selectTime-@doctor.Id" class="form-control">
-                                    <option value="">-- select one --</option>
+                                    <option disabled selected value="">-- select one --</option>
                                 </select>
                             </div>
-
 
                             <button class="btn btn-default">Register</button>
                         </div>
@@ -75,11 +84,9 @@
 
         $.getJSON("/Home/GetJson/", { DayId: $("#selectDay-" + doctorId).val(), doctorId: doctorId }, function (data) {
 
-            console.log(data);
-
             for (var obj in data) {
                 console.log(data[obj].text);
-                $("#selectTime-" + doctorId).append("<option value='2'>"+data[obj].text+"</option>");
+                $("#selectTime-" + doctorId).append("<option value='2'>" + data[obj].text + "</option>");
             }
         });
     }

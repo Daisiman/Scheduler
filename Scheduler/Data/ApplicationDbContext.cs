@@ -13,6 +13,7 @@ namespace Scheduler.Data
 
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<DoctorWorkHours> DoctorWorkHours { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -21,6 +22,7 @@ namespace Scheduler.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Appointment>().HasRequired();
             base.OnModelCreating(builder);
         }
     }
