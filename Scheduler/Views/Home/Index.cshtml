@@ -33,7 +33,7 @@
 
                             <div class="form-group">
                                 <label>Select day:</label>
-                                <select name="selectDay" id="selectDay-@doctor.Id" class="form-control" onchange="myFunction(this.id, 'selectTime-@doctor.Id', @doctor.Id)">
+                                <select name="selectDay" id="selectDay-@doctor.Id" class="form-control" onchange="myFunction(@doctor.Id)">
 
                                     <option value="">-- select day --</option>
 
@@ -46,7 +46,7 @@
                                 </select>
                             </div>
 
-                            <div id="Monday" class="form-group">
+                            <div id="Monday-@doctor.Id" class="form-group">
                                 <label>Select time:</label>
                                 <select id="selectTime-@doctor.Id" class="form-control">
                                     <option value="">-- select one --</option>
@@ -69,7 +69,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+    function myFunction(id) {
+        $.getJSON("/Home/GetJson", null, function (data) {
 
+            console.log(data);
+
+            for (var obj in data) {
+                console.log(data[obj].text);
+                $("#selectTime-" + id).append("<option value='2'>"+data[obj].text+"</option>");
+            }
+        });
+    }
 </script>
 
 
