@@ -26,6 +26,11 @@ namespace Scheduler.Controllers
             _context = context;
         }
 
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
         public JsonResult GetJson(int doctorId, int dayId)
         {
             var list = new List<SelectOption>();

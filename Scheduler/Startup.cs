@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Scheduler.Data;
 using Scheduler.Models;
 using Scheduler.Services;
+using Scheduler.Hubs;
 
 namespace Scheduler
 {
@@ -52,6 +53,7 @@ namespace Scheduler
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +73,11 @@ namespace Scheduler
             app.UseStaticFiles();
            
             app.UseAuthentication();
+
+            app.UseSignalR(route =>
+            {
+                route.MapHub<ChatHub>("/chat");
+            });
 
             app.UseMvc(routes =>
             {

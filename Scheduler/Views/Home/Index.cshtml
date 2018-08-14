@@ -1,6 +1,7 @@
 ﻿@model Scheduler.ViewModels.Test
 @{
     ViewData["Title"] = "Home Page";
+    var ci = new System.Globalization.CultureInfo("en-US");
 }
 
 <ul class="doctors">
@@ -14,11 +15,11 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#@doctor.Id">
                                 <div class="image">
-                                        <td><img src="/Home/ViewImage/@doctor.Id" /></td>                                   
+                                    <td><img width="64px" height="64px" src="/Home/ViewImage/@doctor.Id" /></td>
                                 </div>
                                 <div class="details">
-                                    <div class="Name" style="font-size:20px" ><strong>@doctor.Name @doctor.Surname</strong></div>
-                                    <div class="Scope" >@doctor.Scope</div>
+                                    <div class="Name" style="font-size:20px"><strong>@doctor.Name @doctor.Surname</strong></div>
+                                    <div class="Scope">@doctor.Scope</div>
                                 </div>
                             </a>
                         </h4>
@@ -38,13 +39,13 @@
 
                                     @for (int j = 0; j < DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - DateTime.Now.Day; j++)
                                     {
-                                        @if ((DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Mon" &&  doctor.DoctorWorkHours.MondayFrom != null) ||
-                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Tue" &&  doctor.DoctorWorkHours.TuesdayFrom != null) ||
-                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Wed" &&  doctor.DoctorWorkHours.WednesdayFrom != null) ||
-                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Thu" &&  doctor.DoctorWorkHours.ThursdayFrom != null) ||
-                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Fri" &&  doctor.DoctorWorkHours.FridayFrom != null) ||
-                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Sat" &&  doctor.DoctorWorkHours.SaturdayFrom != null) ||
-                                             (DateTime.Now.AddDays(j).ToString("ddd", new System.Globalization.CultureInfo("en-US")) == "Sun" &&  doctor.DoctorWorkHours.SundayFrom != null))                                            
+                                        @if ((DateTime.Now.AddDays(j).ToString("ddd", ci) == "Mon" && doctor.DoctorWorkHours.MondayFrom != null) ||
+                                           (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Tue" && doctor.DoctorWorkHours.TuesdayFrom != null) ||
+                                           (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Wed" && doctor.DoctorWorkHours.WednesdayFrom != null) ||
+                                           (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Thu" && doctor.DoctorWorkHours.ThursdayFrom != null) ||
+                                           (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Fri" && doctor.DoctorWorkHours.FridayFrom != null) ||
+                                           (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Sat" && doctor.DoctorWorkHours.SaturdayFrom != null) ||
+                                           (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Sun" && doctor.DoctorWorkHours.SundayFrom != null))
                                         {
                                             <option value="@DateTime.Now.AddDays(j).DayOfWeek.ToString("d")">
                                                 @DateTime.Now.AddDays(j).DayOfWeek ( @DateTime.Now.AddDays(j).ToString("MM/dd") )
@@ -71,7 +72,6 @@
     }
 
 </ul>
-
 
 
 

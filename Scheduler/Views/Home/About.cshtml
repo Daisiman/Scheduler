@@ -7,21 +7,3 @@
 <h3>@ViewData["Message"]</h3>
 
 <p>Use this area to provide additional information.</p>
-
-<table class="table table-bordered">
-    @foreach (var doctor in Model.Doctors)
-    {
-    <tr>
-        <td>@doctor.Name</td>
-        <td>@doctor.Surname</td>
-        <td>@doctor.PhoneNumber</td>
-        <td>@doctor.DoctorWorkHours.MondayFrom</td>
-        <td>@doctor.DoctorWorkHours.MondayTo</td> 
-        @if (doctor.Id == 6015)
-        {
-        <td><img src="/Home/ViewImage/@doctor.Id" /></td>
-        }
-
-    </tr>
-    }
-</table>
