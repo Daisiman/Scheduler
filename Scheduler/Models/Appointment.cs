@@ -20,6 +20,9 @@ namespace Scheduler.Models
         [Column(Order = 2)]
         public DateTime AppointmentDate { get; set; }
 
+        [Key]
+        [Column(Order = 3)]
+        public string PatientId { get; set; }
 
     }
 }

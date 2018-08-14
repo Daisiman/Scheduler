@@ -12,6 +12,9 @@ using Scheduler.Data;
 using Scheduler.Models;
 using Scheduler.Services;
 using Scheduler.Hubs;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Scheduler
 {
@@ -34,6 +37,23 @@ namespace Scheduler
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient<ClaimsPrincipal>(
+               s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+
+            //services.AddAuthentication(o =>
+            //{
+            //    o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //});
+            //services.AddAuthentication(sharedOptions =>
+            //{
+            //    sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            //});
+            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme);
+            //        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //.AddCookie();
+
             services.AddScoped<IDoctorList, DoctorList>();
             services.AddScoped<IDoctorWorkHoursList, DoctorWorkHourList>();
 
@@ -46,8 +66,8 @@ namespace Scheduler
             {
                 googleOptions.ClientId = Configuration.GetSection("Authentication")["GoogleId"];
                 googleOptions.ClientSecret = Configuration.GetSection("Authentication")["GoogleSecret"];
-            })
-           .AddCookie();
+            });
+           //.AddCookie();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();

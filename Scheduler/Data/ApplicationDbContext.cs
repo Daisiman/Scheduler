@@ -24,7 +24,7 @@ namespace Scheduler.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Appointment>()
-                .HasKey(c => new { c.DocotorId, c.AppointmentDate });
+                .HasKey(c => new { c.DocotorId, c.AppointmentDate, c.PatientId });
 
             base.OnModelCreating(builder);
         }

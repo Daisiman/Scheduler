@@ -15,7 +15,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#@doctor.Id">
                                 <div class="image">
-                                    <td><img width="64px" height="64px" src="/Home/ViewImage/@doctor.Id" /></td>
+                                    <img width="64" height="64" src="/Home/ViewImage/@doctor.Id" />
                                 </div>
                                 <div class="details">
                                     <div class="Name" style="font-size:20px"><strong>@doctor.Name @doctor.Surname</strong></div>
@@ -33,7 +33,7 @@
 
                             <div class="form-group">
                                 <label>Select day:</label>
-                                <select name="selectDay" id="selectDay-@doctor.Id" class="form-control" onchange="myFunction(@doctor.Id)">
+                                <select name="selectDay" id="selectDay-@doctor.Id" class="form-control" onchange="populate(@doctor.Id)">
 
                                     <option disabled selected value="">-- select day --</option>
 
@@ -63,7 +63,7 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-default">Register</button>
+                            <button class="btn doctorn-default" onclick="register(@doctor.Id)">Register</button>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    function myFunction(doctorId) {
+    function populate(doctorId) {
 
         $("#selectTime-" + doctorId).html("");
 
@@ -88,6 +88,20 @@
                 $("#selectTime-" + doctorId).append("<option value='2'>" + data[obj].text + "</option>");
             }
         });
+    }
+
+    function register(doctorId) {
+
+        var val = $("#selectDay-" + doctorId + " option:selected").text();
+        var val2 = $("#selectTime-" + doctorId + " option:selected").text();
+
+        $.post("/api/Appointments", { doctorId: doctorId })
+            .done(function () {
+                alert("success");
+            }).fail(function () {
+                alert("Failed");
+            });
+
     }
 </script>
 
