@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -96,14 +97,28 @@ namespace Scheduler.Controllers
                 DoctorsWorkHoursViewModel = new DoctorsWorkHoursViewModel { DoctorWorkHours = doctorsWorkHours }
             };
 
-            return View(model);
+            var model2 = new Test()
+            {
+                Doctors = _context.Doctors.ToList(),
+                WorkHours = _context.DoctorWorkHours.ToList(),
+                Image = _context.DoctorImages.ToList()
+            };
+
+            return View(model2);
         }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            //ViewData["Message"] = "Your application description page.";
 
-            return View();
+            var model = new Test()
+            {
+                Doctors = _context.Doctors.ToList(),
+                WorkHours = _context.DoctorWorkHours.ToList(),
+                Image = _context.DoctorImages.ToList()
+            };
+
+            return View(model);
         }
 
         public IActionResult Contact()
@@ -144,6 +159,17 @@ namespace Scheduler.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public FileStreamResult ViewImage(int id)
+        {
+            var image = _context.DoctorImages.FirstOrDefault(x => x.Id == id);
+
+                MemoryStream ms = new MemoryStream(image.Image);
+
+                return new FileStreamResult(ms, "image/png");
+            
         }
     }
 }

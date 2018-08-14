@@ -11,6 +11,9 @@ namespace Scheduler.ViewModels
     {
         //public Doctor Doctor { get; set; }
         //public DoctorWorkHours DoctorWorkHours { get; set; }
+
+        public byte[] Image { get; set; }
+
         [Required]
         [StringLength(80)]
         public string Name { get; set; }

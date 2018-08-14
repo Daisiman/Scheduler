@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,8 +24,6 @@ namespace Scheduler.Controllers
             _context = context;
         }
 
-
-        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -43,7 +43,7 @@ namespace Scheduler.Controllers
         // POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DoctorAndWorkHours model)
+        public ActionResult Create(DoctorAndWorkHours model, IFormFile Image)
         {
             var doctor = new Doctor()
             {
@@ -59,6 +59,44 @@ namespace Scheduler.Controllers
             _context.SaveChanges();
 
             var lastDoctorId = doctor.Id;
+
+            if (Image != null)
+            {
+                if (Image.Length > 0)
+                //Convert Image to byte and save to database
+                {
+                    byte[] p1 = null;
+                    using (var fs1 = Image.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        p1 = ms1.ToArray();
+                    }
+
+                    var doctorImage = new DoctorImage()
+                    {
+                        Id = lastDoctorId,
+                        Image = p1
+                    };
+
+                    _context.DoctorImages.Add(doctorImage);
+                    _context.SaveChanges();
+                }
+            } else
+            {
+                byte[] photo = System.IO.File.ReadAllBytes("wwwroot/images/blank.png");
+
+                var doctorImage = new DoctorImage()
+                {
+                    Id = lastDoctorId,
+                    Image = photo
+                };
+
+                _context.DoctorImages.Add(doctorImage);
+                _context.SaveChanges();
+            }
+
+
 
             var workHours = new DoctorWorkHours()
             {
