@@ -13,6 +13,9 @@ using System.IO;
 using Scheduler.Services;
 using Scheduler.ViewModels;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
+using System.Text;
+using Hangfire;
 
 namespace Scheduler.Controllers
 {
@@ -30,13 +33,30 @@ namespace Scheduler.Controllers
         }
 
         [HttpPost]
-        public IActionResult Appointment(int doctorId)
-        {                     
+        public IActionResult Appointment(int doctorId, string day, string time)
+        {            
+            var registerTime = new StringBuilder();
+            var patientId = _userManager.GetUserId(User);
+
+            day = day.Trim();
+            day = Regex.Replace(day, "[A-Za-z )(]", "");
+
+            //get {yyyy-M-dd HH:mm:ss} format
+            registerTime.Append(DateTime.Now.Year.ToString()).Append("-").Append(day).Append(" ").Append(time).Append(":00");
+            var appointmentDate = DateTime.Parse(registerTime.ToString());
+
+            //Check for dublicates
+            if (_context.Appointments.Any(x => x.PatientId == patientId && x.DocotorId == doctorId && x.AppointmentDate == appointmentDate))
+            {
+                return BadRequest("This appointment already exsist");
+            }
+
             var appointment = new Appointment()
             {
                 DocotorId = doctorId,
-                PatientId = _userManager.GetUserId(User),
-                AppointmentDate = DateTime.Now
+                PatientId = patientId,
+                AppointmentDate = appointmentDate,
+                Doctor = _context.Doctors.FirstOrDefault(x => x.Id == doctorId)
             };
 
             _context.Appointments.Add(appointment);

@@ -15,6 +15,7 @@ using Scheduler.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Hangfire;
 
 namespace Scheduler
 {
@@ -33,12 +34,15 @@ namespace Scheduler
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddHangfire(configuration =>
+                configuration.UseSqlServerStorage("Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<ClaimsPrincipal>(
-               s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            //services.AddTransient<ClaimsPrincipal>(
+            //   s => s.GetService<IHttpContextAccessor>().HttpContext.User);
 
             //services.AddAuthentication(o =>
             //{
@@ -79,6 +83,12 @@ namespace Scheduler
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
+            //GlobalConfiguration.Configuration
+            //.UseSqlServerStorage("DefaultConnection");
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();

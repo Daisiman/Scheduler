@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hangfire;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +37,7 @@ namespace Scheduler
                 }
             }
 
+            RecurringJob.AddOrUpdate<HangfireWorkers.SendNotificationJob>( job => job.Execute(), Cron.Minutely);
             host.Run();
         }
 

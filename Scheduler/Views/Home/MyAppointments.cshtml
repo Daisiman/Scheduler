@@ -1,0 +1,25 @@
+﻿@model Scheduler.ViewModels.MyAppointment
+
+@{ 
+    ViewData["title"] = "My appointments";
+}
+
+<h1>My appointments</h1>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Doctor</th>
+        <th>Cancel</th>
+    </tr>
+@foreach (var appointment in Model.Appointment)
+{
+    <tr>
+        <td>@appointment.AppointmentDate.ToString("yyyy-MM-dd")</td>
+        <td>@appointment.AppointmentDate.ToString("HH:mm")</td>
+        <td>@Model.Doctor.FirstOrDefault(x => x.Id == appointment.DocotorId).Name @Model.Doctor.FirstOrDefault(x => x.Id == appointment.DocotorId).Surname</td>
+        <td><button class="btn btn-danger btn-sm">Cancel</button></td>
+    </tr>
+}
+</table> 
