@@ -83,12 +83,12 @@
 </ul>
 
 <div class="pagination">
-    <a href="#">&laquo;</a>
+    <a href="#" onclick="paginationBackward()">&laquo;</a>
     @for (int j = 1; j < (Model.Doctors.Count() / 5) + 2; j++)
     {
         <a id="pagiId_@j" onclick="paginationClick(@j)" class="pagiB" href="#">@j</a>
     }
-    <a href="#">&raquo;</a>
+    <a id="pagiFw" href="#" onclick="paginationForward()">&raquo;</a>
 </div>
 
 
@@ -126,18 +126,44 @@
     function paginationClick(id) {
         $(".active").removeClass("active");
         $("#pagiId_" + id).addClass("active");
+        showDoctorsOnPagination(id)
+    }
+
+    function paginationForward() {
+        var listItems = $(".pagiB").length;
+        var id = parseInt($(".active").attr("id").slice(7));
+
+        if (id < $(".pagiB").length) {
+            id = id + 1;
+            $(".active").removeClass("active");
+            $("#pagiId_" + id).addClass("active");
+            showDoctorsOnPagination(id);
+        }
+    }
+
+    function paginationBackward() {
+        var listItems = $(".pagiB").length;
+        var id = parseInt($(".active").attr("id").slice(7));
+
+        if (id > 1) {
+            id = id - 1;
+            $(".active").removeClass("active");
+            $("#pagiId_" + id).addClass("active");
+            showDoctorsOnPagination(id);
+        }
+    }
+
+    function showDoctorsOnPagination(id) {
         var listItems = $(".doctors li");
         listItems.hide();
         var start = (id - 1) * 5
         var index = 0;
-        console.log(start);
         for (let li of listItems) {
             if (index >= start && index < start + 5) {
                 $(li).show();
             }
             index++;
         }
-
     }
 
     $(document).ready(function () {
