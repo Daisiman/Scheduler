@@ -34,8 +34,8 @@ namespace Scheduler
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddHangfire(configuration =>
-                configuration.UseSqlServerStorage("Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+           //services.AddHangfire(configuration =>
+           //    configuration.UseSqlServerStorage("Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -86,8 +86,8 @@ namespace Scheduler
             //GlobalConfiguration.Configuration
             //.UseSqlServerStorage("DefaultConnection");
 
-            app.UseHangfireDashboard();
-            app.UseHangfireServer();
+           //app.UseHangfireDashboard();
+           //app.UseHangfireServer();
 
             if (env.IsDevelopment())
             {

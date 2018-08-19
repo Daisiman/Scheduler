@@ -37,7 +37,7 @@ namespace Scheduler
                 }
             }
 
-            RecurringJob.AddOrUpdate<HangfireWorkers.SendNotificationJob>( job => job.Execute(), Cron.Minutely);
+            //RecurringJob.AddOrUpdate<HangfireWorkers.SendNotificationJob>( job => job.Execute(), Cron.Minutely);
             host.Run();
         }
 

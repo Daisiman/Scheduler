@@ -16,6 +16,7 @@ namespace Scheduler.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<DoctorImage> DoctorImages { get; set; }
         public DbSet<BlackList> BlackList { get; set; }
+        public DbSet<LiveChat> LiveChat { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -29,6 +30,9 @@ namespace Scheduler.Data
 
             builder.Entity<BlackList>()
                 .HasKey(c => new { c.UserId, c.DateAdded});
+
+            //builder.Entity<LiveChat>()
+            //    .HasKey(c => new { c.Sender, c.DateCreated });
 
             base.OnModelCreating(builder);
         }
