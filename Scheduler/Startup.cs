@@ -70,8 +70,8 @@ namespace Scheduler
             {
                 googleOptions.ClientId = Configuration.GetSection("Authentication")["GoogleId"];
                 googleOptions.ClientSecret = Configuration.GetSection("Authentication")["GoogleSecret"];
-            });
-           //.AddCookie();
+            })
+           .AddCookie();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();

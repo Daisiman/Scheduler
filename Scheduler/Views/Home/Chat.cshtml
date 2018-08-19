@@ -11,7 +11,7 @@
 
 @*<div id="chat" style="display: none">*@
 <div id="chat">
-    <h3 id="spn-nick"></h3>
+    @*<h3 id="spn-nick"></h3>*@
     <form id="frm-send-message" action="#">
         <label for="message">Message:</label>
         <input type="text" id="message" />
@@ -31,7 +31,9 @@
         .withUrl("/chat")
         .build();
 
-        connection.start().catch(err => console.error(err.toString()));
+    connection.start().catch(err => console.error(err.toString()));
+
+    $('#spn-nick').text('@UserManager.GetUserName(User).ToString()');
 
         $.getJSON("/api/Chat", null, function (data) {
             showChat(data);
@@ -77,8 +79,8 @@
 
     function appendLine(nick, message, color) {
         let nameElement = document.createElement('strong');
-        //nameElement.innerText = `${nick}:`;
-        nameElement.innerText = '@UserManager.GetUserName(User).ToString()' + ':';
+        nameElement.innerText = `${nick}:`;
+        //nameElement.innerText = '@UserManager.GetUserName(User).ToString()' + ':';
 
         let msgElement = document.createElement('em');
         msgElement.innerText = ` ${message}`;
