@@ -40,18 +40,41 @@
     list-style: none;
 }
 
-.doctors > li {
-    position: relative;
-    margin-bottom: 30px;
-}
+    .doctors > li {
+        position: relative;
+        margin-bottom: 30px;
+    }
 
-.doctors li .details {
-    position: absolute;
-    top: 17px;
-    left: 95px;
-}
+    .doctors li .details {
+        position: absolute;
+        top: 17px;
+        left: 95px;
+    }
 
 .carousel-control.right,
 .carousel-control.left {
-    background-image:none;
+    background-image: none;
 }
+
+.pagination {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+    .pagination a {
+        display: inline-block;
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+    }
+
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }

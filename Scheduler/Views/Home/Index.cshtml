@@ -9,18 +9,14 @@
 
 <h1>@ViewData["Message"]</h1>
 
-@*<div id="alertmsg" class="alert alert-success" role="alert" style="display:none">
-    Successfuly registred
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>*@
+<div id="alert-placeholder"></div>
 
 <ul class="doctors">
-
+    @{int i = 0;}
     @foreach (var doctor in Model.Doctors)
     {
-        <li>
+
+        <li id=li_id_@i>
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -52,12 +48,12 @@
                                     @for (int j = 0; j <= DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month); j++)
                                     {
                                         @if ((DateTime.Now.AddDays(j).ToString("ddd", ci) == "Mon" && doctor.DoctorWorkHours.MondayFrom != null) ||
-                                        (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Tue" && doctor.DoctorWorkHours.TuesdayFrom != null) ||
-                                        (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Wed" && doctor.DoctorWorkHours.WednesdayFrom != null) ||
-                                        (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Thu" && doctor.DoctorWorkHours.ThursdayFrom != null) ||
-                                        (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Fri" && doctor.DoctorWorkHours.FridayFrom != null) ||
-                                        (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Sat" && doctor.DoctorWorkHours.SaturdayFrom != null) ||
-                                        (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Sun" && doctor.DoctorWorkHours.SundayFrom != null))
+                                      (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Tue" && doctor.DoctorWorkHours.TuesdayFrom != null) ||
+                                      (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Wed" && doctor.DoctorWorkHours.WednesdayFrom != null) ||
+                                      (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Thu" && doctor.DoctorWorkHours.ThursdayFrom != null) ||
+                                      (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Fri" && doctor.DoctorWorkHours.FridayFrom != null) ||
+                                      (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Sat" && doctor.DoctorWorkHours.SaturdayFrom != null) ||
+                                      (DateTime.Now.AddDays(j).ToString("ddd", ci) == "Sun" && doctor.DoctorWorkHours.SundayFrom != null))
                                         {
                                             <option value="@DateTime.Now.AddDays(j).DayOfWeek.ToString("d")">
                                                 @DateTime.Now.AddDays(j).DayOfWeek ( @DateTime.Now.AddDays(j).ToString("MM/dd") )
@@ -81,9 +77,19 @@
                 </div>
             </div>
         </li>
+        i++;
     }
 
 </ul>
+
+<div class="pagination">
+    <a href="#">&laquo;</a>
+    @for (int j = 1; j < (Model.Doctors.Count() / 5) + 2; j++)
+    {
+        <a id="pagiId_@j" onclick="paginationClick(@j)" class="pagiB" href="#">@j</a>
+    }
+    <a href="#">&raquo;</a>
+</div>
 
 
 
@@ -116,7 +122,58 @@
             });
 
     }
+
+    function paginationClick(id) {
+        $(".active").removeClass("active");
+        $("#pagiId_" + id).addClass("active");
+        var listItems = $(".doctors li");
+        listItems.hide();
+        var start = (id - 1) * 5
+        var index = 0;
+        console.log(start);
+        for (let li of listItems) {
+            if (index >= start && index < start + 5) {
+                $(li).show();
+            }
+            index++;
+        }
+
+    }
+
+    $(document).ready(function () {
+        $("#pagiId_1").addClass("active");
+        var index = 0;
+        var listItems = $(".doctors li");
+        for (let li of listItems) {
+            if (index > 4) {
+                $(li).hide();
+            }
+            index++;
+        }
+        runOncePerDay();
+    })
+
+    function hasOneDayPassed() {
+        var date = new Date().toLocaleDateString();
+
+        if (localStorage.yourapp_date == date)
+            return false;
+
+        localStorage.yourapp_date = date;
+        return true;
+    }
+
+    // some function which should run once a day
+    function runOncePerDay() {
+        if (!hasOneDayPassed()) return false;
+
+        $.getJSON("api/Appointments/GetAppointments", null, function (data) {
+            console.log("suveike");
+            for (var obj in data) {
+                $("#alert-placeholder").append('<div class="alert alert-info" role="alert">Appointment at ' + data[obj]["appointmentDate"] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            }
+        });
+    }
+
+      
 </script>
-
-
-

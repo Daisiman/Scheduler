@@ -174,16 +174,8 @@ namespace Scheduler.Controllers
             return Json(list);
         }
 
-        public async Task<IActionResult> Index(string msg)
+        public async Task<IActionResult> Index()
         {
-            //if (_context.Appointments.Any(x => (x.AppointmentDate.Day - DateTime.Now.Day) < 2 && x.PatientId == _userManager.GetUserId(User)))
-            //{
-            //    ViewData["Message"] = "You Sir have an appointment";
-            //}
-            //else {
-            //    ViewData["Message"] = "All gud";
-            //};
-
             var doctors = await _doctorList.GetAllDoctorsAsync();
             var doctorsWorkHours = await _doctorWorkHoursList.GetAllDoctorsWorkHoursAsync();
 

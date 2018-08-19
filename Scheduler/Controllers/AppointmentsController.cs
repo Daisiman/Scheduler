@@ -81,5 +81,21 @@ namespace Scheduler.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public JsonResult GetAppointments()
+        {
+            var deleteAppointment = _context.Appointments.Where(x => DateTime.Compare(x.AppointmentDate, DateTime.Now) < 0).ToList();
+
+            foreach(var appointement in deleteAppointment)
+            {
+                _context.Appointments.Remove(appointement);
+                _context.SaveChanges();
+            }
+
+            var userId = _userManager.GetUserId(User);
+            var appointmets = _context.Appointments.Where(x => x.PatientId == userId && x.AppointmentDate.Month - DateTime.Now.Month == 0 && x.AppointmentDate.Day - DateTime.Now.Day <= 2).ToList();
+            return Json(appointmets);
+        }
+
     }
 }
