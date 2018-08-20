@@ -11,9 +11,10 @@ using System;
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180819103802_AddBlackListTable")]
+    partial class AddBlackListTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,16 +203,16 @@ namespace Scheduler.Data.Migrations
 
             modelBuilder.Entity("Scheduler.Models.BlackList", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUser");
 
                     b.Property<DateTime>("DateAdded");
 
-                    b.Property<string>("UserName")
-                        .IsRequired();
+                    b.HasKey("Id");
 
-                    b.HasKey("UserId", "DateAdded");
-
-                    b.HasAlternateKey("DateAdded", "UserId");
+                    b.HasIndex("ApplicationUser");
 
                     b.ToTable("BlackList");
                 });
@@ -356,8 +357,7 @@ namespace Scheduler.Data.Migrations
                 {
                     b.HasOne("Scheduler.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUser");
                 });
 
             modelBuilder.Entity("Scheduler.Models.DoctorImage", b =>

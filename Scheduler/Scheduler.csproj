@@ -24,6 +24,8 @@
     <Compile Remove="Data\Migrations\20180813210358_CreateAppointmentTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20180813215005_CreateDoctorImageTable.cs" />
     <Compile Remove="Data\Migrations\20180813215005_CreateDoctorImageTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180819204738_OverrideBlackListModel.cs" />
+    <Compile Remove="Data\Migrations\20180819204738_OverrideBlackListModel.Designer.cs" />
   </ItemGroup>
 
 

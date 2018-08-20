@@ -11,9 +11,10 @@ using System;
 namespace Scheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180819212236_OverrideBlackListModel")]
+    partial class OverrideBlackListModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,9 +206,6 @@ namespace Scheduler.Data.Migrations
                     b.Property<string>("UserId");
 
                     b.Property<DateTime>("DateAdded");
-
-                    b.Property<string>("UserName")
-                        .IsRequired();
 
                     b.HasKey("UserId", "DateAdded");
 

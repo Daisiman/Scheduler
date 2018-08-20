@@ -39,9 +39,18 @@ namespace Scheduler.Controllers
                 Doctor = _context.Doctors.ToList()
             };
 
-            //return View(_context.Appointments.Where(x => x.PatientId == _userManager.GetUserId(User)).ToList());
             return View(model);
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult MyAppointments(int id)
+        //{
+        //    var appointment = _context.Appointments.FirstOrDefault(x => x.DocotorId == model.DocotorId && x.AppointmentDate == model.AppointmentDate);
+
+        //    //_context.Remove(appointment);
+
+        //    return View();
+        //}
 
         public IActionResult Chat()
         {
@@ -156,6 +165,12 @@ namespace Scheduler.Controllers
                     break;
 
             }
+
+            if (list.Count == 0)
+            {
+                list.Add(new SelectOption { Value = "", Text = "All times taken. Try another day" });
+            }
+
             return Json(list);
         }
 

@@ -20,7 +20,7 @@ using Hangfire;
 namespace Scheduler.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Appointments")]
+    [Route("api/Appointments/[action]")]
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -37,13 +37,18 @@ namespace Scheduler.Controllers
         {            
             var registerTime = new StringBuilder();
             var patientId = _userManager.GetUserId(User);
+            var appointmentDate = new DateTime();
 
             day = day.Trim();
             day = Regex.Replace(day, "[A-Za-z )(]", "");
 
             //get {yyyy-M-dd HH:mm:ss} format
             registerTime.Append(DateTime.Now.Year.ToString()).Append("-").Append(day).Append(" ").Append(time).Append(":00");
-            var appointmentDate = DateTime.Parse(registerTime.ToString());
+
+            if(!(DateTime.TryParse(registerTime.ToString(), out appointmentDate))){
+                return BadRequest("Please choose another day");
+            }
+
 
             //Check for dublicates
             if (_context.Appointments.Any(x => x.PatientId == patientId && x.DocotorId == doctorId && x.AppointmentDate == appointmentDate))
@@ -64,5 +69,17 @@ namespace Scheduler.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult DeleteAppointment(int doctorId, DateTime date)
+        {
+            var appointment = _context.Appointments.FirstOrDefault(x => x.DocotorId == doctorId && x.AppointmentDate == date);
+
+            _context.Appointments.Remove(appointment);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
     }
 }
