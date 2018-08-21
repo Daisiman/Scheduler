@@ -1,32 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Scheduler.Data;
+using Scheduler.Models;
+using Scheduler.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Scheduler.Data;
-using Scheduler.Models;
-using Scheduler.Services;
-using Scheduler.ViewModels;
 
 namespace Scheduler.Controllers
 {
     public class HomeController : Controller
     {
-        private IDoctorList _doctorList;
-        private IDoctorWorkHoursList _doctorWorkHoursList;
         private ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
 
-        public HomeController(IDoctorList doctorList, IDoctorWorkHoursList doctorWorkHoursList, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _doctorWorkHoursList = doctorWorkHoursList;
-            _doctorList = doctorList;
             _context = context;
             _userManager = userManager;
         }
@@ -41,16 +35,6 @@ namespace Scheduler.Controllers
 
             return View(model);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult MyAppointments(int id)
-        //{
-        //    var appointment = _context.Appointments.FirstOrDefault(x => x.DocotorId == model.DocotorId && x.AppointmentDate == model.AppointmentDate);
-
-        //    //_context.Remove(appointment);
-
-        //    return View();
-        //}
 
         [Authorize]
         public IActionResult Chat()
@@ -175,32 +159,9 @@ namespace Scheduler.Controllers
             return Json(list);
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var doctors = await _doctorList.GetAllDoctorsAsync();
-            var doctorsWorkHours = await _doctorWorkHoursList.GetAllDoctorsWorkHoursAsync();
-
-            var model = new DoctorsAndWorkHours()
-            {
-                DoctorsViewModel = new DoctorsViewModel { Doctors = doctors },
-                DoctorsWorkHoursViewModel = new DoctorsWorkHoursViewModel { DoctorWorkHours = doctorsWorkHours }
-            };
-
-            var model2 = new Test()
-            {
-                Doctors = _context.Doctors.ToList(),
-                WorkHours = _context.DoctorWorkHours.ToList(),
-                Image = _context.DoctorImages.ToList()
-            };
-
-            return View(model2);
-        }
-
-        public IActionResult About()
-        {
-            //ViewData["Message"] = "Your application description page.";
-
-            var model = new Test()
+            var model = new FullDoctorViewModel()
             {
                 Doctors = _context.Doctors.ToList(),
                 WorkHours = _context.DoctorWorkHours.ToList(),
@@ -210,39 +171,18 @@ namespace Scheduler.Controllers
             return View(model);
         }
 
+        public IActionResult About()
+        {
+            //ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
             return View();
-        }
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Doctor model)
-        {
-            var doctor = new Doctor()
-            {
-                Name = model.Name,
-                Surname = model.Surname,
-                Scope = model.Scope,
-                Address = model.Address,
-                Office = model.Office
-            };
-
-            _context.Doctors.Add(doctor);
-            _context.SaveChanges();
-
-
-
-            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Error()

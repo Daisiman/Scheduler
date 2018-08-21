@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Scheduler.Data;
+using System;
 
 namespace Scheduler
 {
@@ -35,8 +30,6 @@ namespace Scheduler
                     logger.LogError(exception, "An error occurred while creating roles");
                 }
             }
-
-            //RecurringJob.AddOrUpdate<HangfireWorkers.SendNotificationJob>( job => job.Execute(), Cron.Minutely);
             host.Run();
         }
 

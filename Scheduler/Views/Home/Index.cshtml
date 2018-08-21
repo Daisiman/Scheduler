@@ -1,4 +1,4 @@
-﻿@model Scheduler.ViewModels.Test
+﻿@model Scheduler.ViewModels.FullDoctorViewModel
 @{
     ViewData["Title"] = "Home Page";
     var ci = new System.Globalization.CultureInfo("en-US");
@@ -105,7 +105,7 @@
                 $("#selectTime-" + doctorId).append("<option value='2'>" + data[obj].text + "</option>");
             }
         });
-    }
+    };
 
     function register(doctorId) {
 
@@ -115,19 +115,17 @@
         $.post("/api/Appointments/Appointment", { doctorId: doctorId, day: val.toString(), time: val2.toString() })
             .done(function () {
                 alert("You successfully registred on " + val.trim() + " at " + val2);
-                //$('#alertmsg').show();
                 populate(doctorId);
             }).fail(function () {
                 alert("Something failed!");
             });
-
-    }
+    };
 
     function paginationClick(id) {
         $(".active").removeClass("active");
         $("#pagiId_" + id).addClass("active");
         showDoctorsOnPagination(id)
-    }
+    };
 
     function paginationForward() {
         var listItems = $(".pagiB").length;
@@ -139,7 +137,7 @@
             $("#pagiId_" + id).addClass("active");
             showDoctorsOnPagination(id);
         }
-    }
+    };
 
     function paginationBackward() {
         var listItems = $(".pagiB").length;
@@ -151,7 +149,7 @@
             $("#pagiId_" + id).addClass("active");
             showDoctorsOnPagination(id);
         }
-    }
+    };
 
     function showDoctorsOnPagination(id) {
         var listItems = $(".doctors li");
@@ -164,7 +162,7 @@
             }
             index++;
         }
-    }
+    };
 
     $(document).ready(function () {
         $("#pagiId_1").addClass("active");
@@ -177,7 +175,7 @@
             index++;
         }
         runOncePerDay();
-    })
+    });
 
     function hasOneDayPassed() {
         var date = new Date().toLocaleDateString();
@@ -187,7 +185,7 @@
 
         localStorage.yourapp_date = date;
         return true;
-    }
+    };
 
     // some function which should run once a day
     function runOncePerDay() {
@@ -199,7 +197,7 @@
                 $("#alert-placeholder").append('<div class="alert alert-success" role="alert">You have an appointmnet. Please see  <a href="/Home/MyAppointments" class="alert-link">more information</a>.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             }
         });
-    }
+    };
 
       
 </script>

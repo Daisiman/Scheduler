@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
 using Scheduler.Models;
 using Scheduler.ViewModels;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Scheduler.Controllers
 {

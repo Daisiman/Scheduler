@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
 using Scheduler.Models;
-using System.Diagnostics;
-using System.IO;
-using Scheduler.Services;
-using Scheduler.ViewModels;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
+using System;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Scheduler.Controllers
 {
@@ -43,7 +35,10 @@ namespace Scheduler.Controllers
             day = Regex.Replace(day, "[A-Za-z )(]", "");
 
             //get {yyyy-M-dd HH:mm:ss} format
-            registerTime.Append(DateTime.Now.Year.ToString()).Append("-").Append(day).Append(" ").Append(time).Append(":00");
+            registerTime.Append(DateTime.Now.Year.ToString())
+                .Append("-").Append(day)
+                .Append(" ").Append(time)
+                .Append(":00");
 
             if(!(DateTime.TryParse(registerTime.ToString(), out appointmentDate))){
                 return BadRequest("Please choose another day");
@@ -84,6 +79,7 @@ namespace Scheduler.Controllers
         [HttpGet]
         public JsonResult GetAppointments()
         {
+            //deletes old appointments once a day
             var deleteAppointment = _context.Appointments.Where(x => DateTime.Compare(x.AppointmentDate, DateTime.Now) < 0).ToList();
 
             foreach(var appointement in deleteAppointment)

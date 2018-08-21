@@ -1,17 +1,10 @@
-﻿using Scheduler.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Scheduler.ViewModels
 {
     public class DoctorAndWorkHours
     {
-        //public Doctor Doctor { get; set; }
-        //public DoctorWorkHours DoctorWorkHours { get; set; }
-
         public byte[] Image { get; set; }
 
         [Required]
@@ -36,6 +29,8 @@ namespace Scheduler.ViewModels
         [RegularExpression("^(\\+3706)\\d{3}\\d{4}$", ErrorMessage = "Enter Lithuanian phonenumber +370..")]
         public string PhoneNumber { get; set; }
 
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         public DateTime? MondayFrom { get; set; }
 
         [DataType(DataType.Time)]

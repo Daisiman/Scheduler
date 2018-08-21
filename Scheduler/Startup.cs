@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scheduler.Data;
+using Scheduler.Hubs;
 using Scheduler.Models;
 using Scheduler.Services;
-using Scheduler.Hubs;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Scheduler
 {
@@ -32,34 +26,11 @@ namespace Scheduler
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-           //services.AddHangfire(configuration =>
-           //    configuration.UseSqlServerStorage("Server=(localdb)\\mssqllocaldb;Trusted_Connection=True;MultipleActiveResultSets=true"));
-
+       
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            //services.AddTransient<ClaimsPrincipal>(
-            //   s => s.GetService<IHttpContextAccessor>().HttpContext.User);
-
-            //services.AddAuthentication(o =>
-            //{
-            //    o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //});
-            //services.AddAuthentication(sharedOptions =>
-            //{
-            //    sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            //});
-            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme);
-            //        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //.AddCookie();
-
-            services.AddScoped<IDoctorList, DoctorList>();
-            services.AddScoped<IDoctorWorkHoursList, DoctorWorkHourList>();
-
+       
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration.GetSection("Authentication")["FacebookId"];
@@ -82,12 +53,6 @@ namespace Scheduler
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
-            //GlobalConfiguration.Configuration
-            //.UseSqlServerStorage("DefaultConnection");
-
-           //app.UseHangfireDashboard();
-           //app.UseHangfireServer();
-
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
