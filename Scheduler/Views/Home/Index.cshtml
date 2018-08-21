@@ -99,7 +99,9 @@
 
         $("#selectTime-" + doctorId).html("");
 
-        $.getJSON("/Home/GetJson/", { DayId: $("#selectDay-" + doctorId).val(), doctorId: doctorId, day: $("#selectDay-" + doctorId + " option:selected").text().trim() }, function (data) {
+        $.getJSON("/Home/GetJson/",
+            { DayId: $("#selectDay-" + doctorId).val(), DoctorId: doctorId, Day: $("#selectDay-" + doctorId + " option:selected").text().trim() },
+            function (data) {
 
             for (var obj in data) {
                 $("#selectTime-" + doctorId).append("<option value='2'>" + data[obj].text + "</option>");
@@ -112,7 +114,7 @@
         var val = $("#selectDay-" + doctorId + " option:selected").text();
         var val2 = $("#selectTime-" + doctorId + " option:selected").text();
 
-        $.post("/api/Appointments/Appointment", { doctorId: doctorId, day: val.toString(), time: val2.toString() })
+        $.post("/api/Appointments/Appointment", { DoctorId: doctorId, Day: val.toString(), Time: val2.toString() })
             .done(function () {
                 alert("You successfully registred on " + val.trim() + " at " + val2);
                 populate(doctorId);

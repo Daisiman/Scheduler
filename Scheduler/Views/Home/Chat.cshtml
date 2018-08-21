@@ -61,8 +61,8 @@
         let message = $('#message').val();
         let nick = '@UserManager.GetUserName(User).ToString()';
 
-        $.post("/api/Chat", { msg: message }).fail(function () {
-            alert("no gud with chat");
+        $.post("/api/Chat", { Message: message }).fail(function () {
+            alert("Something failed! Try again");
         });
 
         $('#message').val('');

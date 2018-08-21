@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
+using Scheduler.Dtos;
 using Scheduler.Models;
 using System;
 using System.Linq;
@@ -33,12 +34,12 @@ namespace Scheduler.Controllers.API
 
         // POST api/<controller>
         [HttpPost]
-        public IActionResult Post(string msg)
+        public IActionResult Post(ChatDto dto)
         {
             var message = new LiveChat()
             {
                 Sender = User.Identity.Name,
-                Message = msg,
+                Message = dto.Message,
                 DateCreated = DateTime.Now
             };
 

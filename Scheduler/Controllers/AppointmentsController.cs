@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
+using Scheduler.Dtos;
 using Scheduler.Models;
 using System;
 using System.Linq;
@@ -25,11 +26,13 @@ namespace Scheduler.Controllers
         }
 
         [HttpPost]
-        public IActionResult Appointment(int doctorId, string day, string time)
+        public IActionResult Appointment(AppointmentDto dto)
         {            
             var registerTime = new StringBuilder();
             var patientId = _userManager.GetUserId(User);
             var appointmentDate = new DateTime();
+
+            var day = dto.Day;
 
             day = day.Trim();
             day = Regex.Replace(day, "[A-Za-z )(]", "");
@@ -37,26 +40,25 @@ namespace Scheduler.Controllers
             //get {yyyy-M-dd HH:mm:ss} format
             registerTime.Append(DateTime.Now.Year.ToString())
                 .Append("-").Append(day)
-                .Append(" ").Append(time)
+                .Append(" ").Append(dto.Time)
                 .Append(":00");
 
             if(!(DateTime.TryParse(registerTime.ToString(), out appointmentDate))){
                 return BadRequest("Please choose another day");
             }
 
-
             //Check for dublicates
-            if (_context.Appointments.Any(x => x.PatientId == patientId && x.DocotorId == doctorId && x.AppointmentDate == appointmentDate))
+            if (_context.Appointments.Any(x => x.PatientId == patientId && x.DocotorId == dto.DoctorId && x.AppointmentDate == appointmentDate))
             {
                 return BadRequest("This appointment already exsist");
             }
 
             var appointment = new Appointment()
             {
-                DocotorId = doctorId,
+                DocotorId = dto.DoctorId,
                 PatientId = patientId,
                 AppointmentDate = appointmentDate,
-                Doctor = _context.Doctors.FirstOrDefault(x => x.Id == doctorId)
+                Doctor = _context.Doctors.FirstOrDefault(x => x.Id == dto.DoctorId)
             };
 
             _context.Appointments.Add(appointment);
@@ -66,9 +68,9 @@ namespace Scheduler.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteAppointment(int doctorId, DateTime date)
+        public IActionResult DeleteAppointment(DeleteAppointmentDto dto)
         {
-            var appointment = _context.Appointments.FirstOrDefault(x => x.DocotorId == doctorId && x.AppointmentDate == date);
+            var appointment = _context.Appointments.FirstOrDefault(x => x.DocotorId == dto.DoctorId && x.AppointmentDate == dto.Date);
 
             _context.Appointments.Remove(appointment);
             _context.SaveChanges();

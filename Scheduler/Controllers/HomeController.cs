@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Scheduler.Data;
+using Scheduler.Dtos;
 using Scheduler.Models;
 using Scheduler.ViewModels;
 using System;
@@ -42,20 +43,22 @@ namespace Scheduler.Controllers
             return View();
         }
 
-        public JsonResult GetJson(int doctorId, int dayId, string day)
+        public JsonResult GetJson(WorkHoursJsonDto dto)
         {
             var selectedDay = new StringBuilder();
             var list = new List<SelectOption>();
             var existingAppointments = new List<String>();
+
+            var day = dto.Day;
 
             day = Regex.Replace(day, "[A-Za-z )(]", "");
 
             //Get {yyyy-MM-dd} format
             selectedDay.Append(DateTime.Now.Year).Append("-").Append(day);
 
-            var workHours = _context.DoctorWorkHours.FirstOrDefault(x => x.Id == doctorId);
+            var workHours = _context.DoctorWorkHours.FirstOrDefault(x => x.Id == dto.DoctorId);
             var appointments = _context.Appointments
-                .Where(x => x.AppointmentDate.ToShortDateString() == selectedDay.ToString() && x.DocotorId == doctorId)
+                .Where(x => x.AppointmentDate.ToShortDateString() == selectedDay.ToString() && x.DocotorId == dto.DoctorId)
                 .Select(x => x.AppointmentDate);
 
             foreach (var date in appointments)
@@ -63,7 +66,7 @@ namespace Scheduler.Controllers
                 existingAppointments.Add(date.ToShortTimeString());
             }
 
-            switch (dayId)
+            switch (dto.DayId)
             {
                 case 0:
                     for (int i = 0; i <= workHours.SundayTo.Value.Hour - workHours.SundayFrom.Value.Hour; i++)
