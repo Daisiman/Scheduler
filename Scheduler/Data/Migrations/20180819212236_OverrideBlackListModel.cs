@@ -17,12 +17,11 @@ namespace Scheduler.Data.Migrations
                 name: "Id",
                 table: "BlackList");
 
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.AddColumn<string>(
                 name: "UserId",
                 table: "BlackList",
                 nullable: false,
-                oldClrType: typeof(string),
-                oldNullable: true);
+                defaultValue: "");
 
             migrationBuilder.AddUniqueConstraint(
                 name: "AK_BlackList_DateAdded_UserId",
