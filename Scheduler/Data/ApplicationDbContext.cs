@@ -31,9 +31,6 @@ namespace Scheduler.Data
             builder.Entity<BlackList>()
                 .HasKey(c => new { c.UserId, c.DateAdded});
 
-            //builder.Entity<LiveChat>()
-            //    .HasKey(c => new { c.Sender, c.DateCreated });
-
             base.OnModelCreating(builder);
         }
     }

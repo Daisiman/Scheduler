@@ -1,6 +1,11 @@
 ﻿body {
     padding-top: 80px;
     padding-bottom: 20px;
+    /*background-color: lightsteelblue;*/
+    background-image: url('..//images/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* Wrapping element */
@@ -40,20 +45,17 @@
     list-style: none;
 }
 
-    .doctors > li {
-        position: relative;
-        margin-bottom: 30px;
-    }
+.doctors > li {
+    position: relative;
+    margin-bottom: 20px;
+    background-color: #b3c2bf;
+    border-radius:20px;
+}
 
-    .doctors li .details {
-        position: absolute;
-        top: 17px;
-        left: 95px;
-    }
-
-.carousel-control.right,
-.carousel-control.left {
-    background-image: none;
+.doctors li .details {
+    position: absolute;
+    top: 17px;
+    left: 95px;
 }
 
 .pagination {
@@ -62,19 +64,111 @@
     text-align: center;
 }
 
-    .pagination a {
-        display: inline-block;
-        color: black;
-        padding: 8px 16px;
-        text-decoration: none;
-        transition: background-color .3s;
+.pagination a {
+   display: inline-block;
+   color: black;
+   padding: 8px 16px;
+   text-decoration: none;
+   transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /*background-color: red;*/
+    color: black;
+    text-align: center;
+}
+
+.checkbox {
+    float:right;
+}
+
+/*Chat CSS*/
+
+.myText {
+    border: 2px;
+    border-color:blue;
+    border-radius:7px;
+    padding: 10px;
+    background-color:
+        aliceblue;
+    opacity: 1;
+    width: 90%;
+    margin-bottom: 10px;
+    margin-left:20px;
+}
+
+.messages {
+    list-style:none;
+}
+
+.messages > li {
+    padding-bottom:20px;
+}
+
+.frame {
+    /*background: #e0e0de;*/
+    height: 500px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    padding: 0;
+}
+
+
+/*Navbar CSS*/
+
+
+.navbar-inverse {
+    background-color: aliceblue;
+    border-color: #c0dfd9;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: lightblue;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: #333;
+    background-color: lightblue;
+}
+
+    .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+        color: #333;
+        background-color: lightblue;
     }
 
-        .pagination a.active {
-            background-color: dodgerblue;
-            color: white;
-        }
+.navbar-inverse .navbar-nav > li > a {
+    color: #3b3a36;
+}
 
-        .pagination a:hover:not(.active) {
-            background-color: #ddd;
-        }
+.navbar-inverse .navbar-brand {
+    font-style:italic;
+    color: #3b3a36;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: #333;
+    background-color: lightblue;
+}
+
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: aliceblue;
+    border-color: lightsteelblue;
+}
+
+table {
+    background-color: white;
+}

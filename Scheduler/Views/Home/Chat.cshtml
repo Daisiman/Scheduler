@@ -10,22 +10,29 @@
     </div>*@
 
 @*<div id="chat" style="display: none">*@
-<div id="chat">
-    @*<h3 id="spn-nick"></h3>*@
-    <form id="frm-send-message" action="#">
-        <label for="message">Message:</label>
-        <input type="text" id="message" />
-        <input type="submit" id="send" value="Send" class="send" />
-    </form>
-    <div class="clear">
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2 frame" id="frame">
+        @*<h3 id="spn-nick"></h3>*@
+        <ul class="messages" id="messages"></ul>
+        <form id="frm-send-message" action="#" autocomplete="off">
+            @*<label for="message">Message:</label>*@
+           
+                <input class="myText" type="text" id="message" placeholder="Type your message" />
+                @*<button type="submit"><i class="glyphicon glyphicon-send" aria-hidden="true"></i></button>*@
+           
+        </form>
+        <div class="clear">
+        </div>
     </div>
-    <ul id="messages"></ul>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="~/lib/signalr/signalr.js"></script>
 <script>
 
+    function scroll() {
+        $(".frame").animate({ scrollTop: $(this).height() }, "fast");
+    }
 
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("/chat")
@@ -37,20 +44,34 @@
 
         $.getJSON("/api/Chat", null, function (data) {
             showChat(data);
+            scroll();
         });
 
         function showChat(data) {
-            console.log(data);
+            //console.log(data);
             for (var msg in data) {
-                let nameElement = document.createElement('strong');
-                nameElement.innerText = data[msg]["sender"] + ':';
+                //let dateElement = document.createElement('em');
+                //dateElement.innerText = data[msg]["dateCreated"];
 
+                //let divElement = document.createElement('div');
+                
+                @*if (data[msg]["sender"] == '@UserManager.GetUserName(User)') {
+                    divElement.className = "Iamuser";
+                }*@
+
+                let nameElement = document.createElement('strong');
+                nameElement.innerText = data[msg]["sender"] + ': ';
+    
                 let msgElement = document.createElement('em');
                 msgElement.innerText = data[msg]["message"];
 
                 let li = document.createElement('li');
+                //divElement.appendChild(nameElement);
+                //divElement.appendChild(msgElement);
                 li.appendChild(nameElement);
                 li.appendChild(msgElement);
+                //li.appendChild(dateElement);
+
 
                 $('#messages').append(li);
             }
@@ -58,6 +79,7 @@
 
     connection.on('Send', (nick, message) => {
         appendLine(nick, message);
+        scroll();
         });
 
     document.getElementById('frm-send-message').addEventListener('submit', event => {
@@ -65,9 +87,7 @@
         //let nick = $('#spn-nick').text();
         let nick = '@UserManager.GetUserName(User).ToString()';
 
-        $.post("/api/Chat", { msg: message }).done(function() {
-            alert("all gud with chat");
-        }).fail(function () {
+        $.post("/api/Chat", { msg: message }).fail(function () {
             alert("no gud with chat");
         });
 
@@ -90,6 +110,8 @@
         li.appendChild(msgElement);
 
         $('#messages').append(li);
+
+        scroll();
     };
 
     function continueToChat() {

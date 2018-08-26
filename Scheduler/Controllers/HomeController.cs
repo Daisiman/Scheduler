@@ -52,6 +52,7 @@ namespace Scheduler.Controllers
         //    return View();
         //}
 
+        [Authorize]
         public IActionResult Chat()
         {
             return View();

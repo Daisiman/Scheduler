@@ -157,34 +157,35 @@ namespace Scheduler.Controllers
         // POST: Admin/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection, DoctorAndWorkHours model)
+        public ActionResult Edit(int id, IFormCollection collection, DoctorAndWorkHours model, IFormFile Image)
         {
 
             var doctor = _context.Doctors.FirstOrDefault(x => x.Id == id);
             var workHours = _context.DoctorWorkHours.FirstOrDefault(x => x.Id == id);
+            var image = _context.DoctorImages.FirstOrDefault(x => x.Id == id);
 
-            //byte[] p1 = null;
+            byte[] p1 = null;
 
 
-            //if (Image != null)
-            //{
-            //    if (Image.Length > 0)
-            //    //Convert Image to byte and save to database
-            //    {
-            //        //byte[] p1 = null;
-            //        using (var fs1 = Image.OpenReadStream())
-            //        using (var ms1 = new MemoryStream())
-            //        {
-            //            fs1.CopyTo(ms1);
-            //            p1 = ms1.ToArray();
-            //        }
-            //    }
-            //}
+            if (Image != null)
+            {
+                if (Image.Length > 0)
+                //Convert Image to byte and save to database
+                {
+                    //byte[] p1 = null;
+                    using (var fs1 = Image.OpenReadStream())
+                    using (var ms1 = new MemoryStream())
+                    {
+                        fs1.CopyTo(ms1);
+                        p1 = ms1.ToArray();
+                    }
+                }
+            }
 
             try
             {
                 //Image
-                //doctor.DoctorImage.Image = p1;
+                image.Image = p1;
 
                 //Personal information
                 doctor.Name = model.Name;

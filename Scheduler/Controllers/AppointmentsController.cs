@@ -15,10 +15,10 @@ using Scheduler.ViewModels;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Text;
-using Hangfire;
 
 namespace Scheduler.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Appointments/[action]")]
     public class AppointmentsController : Controller

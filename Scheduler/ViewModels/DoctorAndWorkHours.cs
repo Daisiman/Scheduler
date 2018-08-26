@@ -33,6 +33,7 @@ namespace Scheduler.ViewModels
         public string Scope { get; set; }
 
         [Required]
+        [RegularExpression("^(\\+3706)\\d{3}\\d{4}$", ErrorMessage = "Enter Lithuanian phonenumber +370..")]
         public string PhoneNumber { get; set; }
 
         public DateTime? MondayFrom { get; set; }
